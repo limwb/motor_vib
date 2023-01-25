@@ -5,11 +5,23 @@ import configparser
 import os
 
 from matplotlib.animation import FuncAnimation
-
+from dbconnection import MongoDB
 global conn
 
 def run(config):
     socket_connection(config)
+    ### show data start
+    #show_realtime_graph()
+
+    db = MongoDB()
+
+    # while True:
+    for i in range(10):
+        data_to_dict = recv_data()
+        db.insert_data(data_to_dict)
+    # connection DB
+
+def show_realtime_graph():
     fig, ax = plt.subplots()
 
     ax.set_xlim(0, 100)
@@ -36,18 +48,25 @@ def socket_connection(config):
 
     print('Connected by', addr)
 
+def recv_data():
+    try:
+        data = conn.recv(1024)
+        data_to_str = data.decode('utf-8')
+        data_to_dict = json.loads(data_to_str)
+
+        return data_to_dict['filedKeys']
+    except Exception as e:
+        print(e)
 
 def animate(i, ax, x, y1, y2, y3):
     global conn
     x.append(x[-1] + 1)
 
     try:
-        data = conn.recv(1024)
-        data_to_str = data.decode('utf-8')
-        data_to_dict = json.loads(data_to_str)
-        y_data_x = data_to_dict[list(data_to_dict.keys())[0]]['acc_x']
-        y_data_y = data_to_dict[list(data_to_dict.keys())[0]]['acc_y']
-        y_data_z = data_to_dict[list(data_to_dict.keys())[0]]['acc_z']
+        data_to_dict = recv_data()
+        y_data_x = data_to_dict['acc_x']
+        y_data_y = data_to_dict['acc_y']
+        y_data_z = data_to_dict['acc_z']
 
     except Exception as e:
         print('data parsing error', e)
