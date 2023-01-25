@@ -16,7 +16,7 @@
 - socket 통신 구현 완료 (23.01.18)
 - sensor data 전송 구현 완료 (23.01.20)
 - 실시간 그래프 구현 완료 (23.01.25)
-- mongoDB 등 NoSQL DB 구축 예정
+- mongoDB 등 NoSQL DB 구축중 (23.01.25)
 - 풍속 1단 데이터 수집 후 학습 예정
   - OCSVM or IF
 - Flutter 등 크로스플랫폼 사용하여 디바이스와 연동 예정
