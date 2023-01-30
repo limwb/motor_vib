@@ -10,6 +10,7 @@ from dbconnection import MongoDB
 global client_socket
 
 def run(config):
+    global client_socket
     socket_connection(config)
     ### show data start
     # show_realtime_graph()
@@ -20,6 +21,8 @@ def run(config):
         data_to_dict = recv_data()
         print(data_to_dict)
         db.insert_data(data_to_dict)
+
+    client_socket.close()
 
 
 def show_realtime_graph():
