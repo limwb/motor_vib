@@ -15,8 +15,15 @@ def run(config):
     ### show data start
     # show_realtime_graph()
 
-    # connection DB
-    db = MongoDB()
+    """
+    connection DB
+    collection
+    1. motor_vib : normal data ( Fan power : 1 )
+    2. motor_vib_ : normal data ( Fan power : 1 )
+    1. motor_vib : normal data ( Fan power : 1 )
+    """
+
+    db = MongoDB(collection='motor_vib')
     while True:
         data_to_dict = recv_data()
         print(data_to_dict)
